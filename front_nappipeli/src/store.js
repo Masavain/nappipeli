@@ -4,10 +4,12 @@ import { composeWithDevTools } from 'redux-devtools-extension'
 
 import notificationReducer from './reducers/notificationReducer'
 import counterReducer from './reducers/counterReducer'
+import winnersReducer from './reducers/winnersReducer'
 
 const reducer = combineReducers({
     counter: counterReducer,
-    notification: notificationReducer
+    notification: notificationReducer,
+    winners: winnersReducer
   })
 
 const store = createStore(reducer,
