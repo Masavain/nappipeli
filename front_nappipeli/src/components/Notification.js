@@ -1,15 +1,20 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { deleteMessage, hideMessage } from './../reducers/notificationReducer'
+import winnerService from './../services/winners'
 
 
 class Notification extends React.Component {
     handleSubmit = async (event) => {
         event.preventDefault()
-        const content = event.target.name.value
-        console.log(content)
+        const winnerObject = {
+            name: event.target.name.value,
+            date: new Date(),
+          }
+        winnerService.create(winnerObject)
         this.props.deleteMessage()
     }
+
 
     render() {
         if (this.props.notification.message === '') {
@@ -24,9 +29,10 @@ class Notification extends React.Component {
             <div style={style}>
                 {this.props.notification.message}
                 <form onSubmit={this.handleSubmit}>
-                    <div><input name='name' /></div>
+                    <div><input type="text" name="name" /></div>
                     <button>input name</button>
                 </form>
+                <button onClick={() => this.props.deleteMessage()}>X</button>
             </div>
         )
     }

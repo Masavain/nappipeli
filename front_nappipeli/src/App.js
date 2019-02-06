@@ -3,6 +3,9 @@ import { connect } from 'react-redux'
 import { initCounter, increment, changeWinCategory } from './reducers/counterReducer'
 import { notifyWin, initNotification, press, deleteMessage, hideMessage } from './reducers/notificationReducer'
 import Notification from './components/Notification'
+import counterService from './services/counter'
+
+
 import './App.css';
 
 class App extends React.Component {
@@ -10,11 +13,16 @@ class App extends React.Component {
     this.props.initCounter()
     this.props.initNotification()
   }
-
-
+  
   render() {
     const buttonPress = async () => {
       await this.props.increment()
+      console.log(this.props.counter.count)
+      const counterObject = {
+        id:'5c5aafed153cf16a0d76c6fc',
+        state: this.props.counter.count
+      }
+      await counterService.update(counterObject)
       if ((this.props.counter.count % 100 !== 0) && this.props.notification.pressed) {
         await this.props.changeWinCategory(100)
       }
@@ -39,8 +47,6 @@ class App extends React.Component {
         </button>
         <div>{100 - (this.props.counter.count % 100)}</div>
         <Notification/>
-        <div>{(100 - (this.props.counter.count % 100) === 100 && this.props.notification.pressed) ?
-          <div>{}</div> : <div></div>}</div>
       </div>
     )
   }
