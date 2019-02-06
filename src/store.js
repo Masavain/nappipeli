@@ -2,12 +2,12 @@ import { createStore, combineReducers, applyMiddleware } from 'redux'
 import thunk from 'redux-thunk'
 import { composeWithDevTools } from 'redux-devtools-extension'
 
-import winReducer from './reducers/winReducer'
+import notificationReducer from './reducers/notificationReducer'
 import counterReducer from './reducers/counterReducer'
 
 const reducer = combineReducers({
     counter: counterReducer,
-    win: winReducer
+    notification: notificationReducer
   })
 
 const store = createStore(reducer,
