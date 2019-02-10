@@ -5,8 +5,14 @@ import { notifyWin, initNotification, press, deleteMessage, hideMessage } from '
 import { initiateWinners, toggle } from './reducers/winnersReducer'
 import Notification from './components/Notification'
 import counterService from './services/counter'
-import { Button } from 'react-bootstrap'
+import { Button, ListGroup, ListGroupItem } from 'react-bootstrap'
 import './App.css'
+
+const prizes = {
+  '100':'small',
+  '200':'medium',
+  '500':'BIG'
+}
 
 class App extends React.Component {
   componentWillMount = async () => {
@@ -15,7 +21,10 @@ class App extends React.Component {
     this.props.initiateWinners()
   }
 
+
+
   render() {
+    
     const buttonPress = async () => {
       await this.props.increment()
       console.log(this.props.counter.count)
@@ -37,7 +46,10 @@ class App extends React.Component {
       if (!this.props.notification.pressed) this.props.press()
 
       if ((this.props.counter.count % this.props.counter.winCategory) === 0 && this.props.notification.pressed) {
-        this.props.notifyWin(`You WIN ${this.props.counter.winCategory}`)
+        if (this.props.counter.winCategory === 100) this.props.notifyWin(`You WIN a small prize!`)
+        if (this.props.counter.winCategory === 200) this.props.notifyWin(`You WIN a medium prize!!`)
+        if (this.props.counter.winCategory === 500) this.props.notifyWin(`You WIN a BIG prize!!!`)
+        
       }
     }
     const toggleLeaderboard = async () => {
@@ -49,7 +61,7 @@ class App extends React.Component {
     }
     return (
       <div style={container}>
-        <h2 style={{ position: 'relative', padding: 10 }}>{'Nappipeli'}</h2>
+        <h2 style={{ position: 'relative', padding: 10 }}>{'NappUpeli'}</h2>
 
         <h2 style={{ position: 'relative', padding: 50 }}>{100 - (this.props.counter.count % 100)+ '...'}</h2>
         <div style={{ position: 'relative', left: 30}}> clicks until next prize </div>
@@ -58,14 +70,13 @@ class App extends React.Component {
         </Button>
         <Notification />
 
-        <div><Button style={{ margin: 5 }} onClick={() => toggleLeaderboard()}>Leaderboard</Button>
 
+        <Button style={{ margin: 5 }} onClick={() => toggleLeaderboard()}>Leaderboard</Button>
         <div> {this.props.winners.toggle ?
-          <ul style={{border: '1px black'}}>
-            {this.props.winners.winners.map(w => <li>{w.name}</li>)}
+          <ul class="collection" style={{width: 200}}>
+            {this.props.winners.winners.map(w => <li class="collection-item">{w.name}</li>)}
           </ul>
           : <div></div>} </div>
-          </div>
       </div>
     )
   }

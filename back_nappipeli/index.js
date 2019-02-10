@@ -8,8 +8,8 @@ const winnersRouter = require('./controllers/winners')
 const counterRouter = require('./controllers/counter')
 const config = require('./utils/config')
 const middleware = require('./utils/middleware')
-mongoose.connect('mongodb://Masavain:Nappipeli123@ds223605.mlab.com:23605/nappipeli')
 
+mongoose.connect('mongodb://Masavain:Nappipeli123@ds223605.mlab.com:23605/nappipeli')
 // mongoose.connect(config.mongoUrl)
 mongoose.Promise = global.Promise
 
@@ -26,6 +26,7 @@ const server = http.createServer(app)
 server.listen(config.port, () => {
   console.log(`Server running on port ${config.port}`)
 })
+
 
 server.on('close', () => {
   mongoose.connection.close()
